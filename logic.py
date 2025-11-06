@@ -89,11 +89,19 @@ class Deck:
 
 class Game:
     def __init__(self, num_players, include_joker, num_jokers):
+        # Stacks with moves that have been played
         self._card_stack = deque([])
+        self._current_move = deque([])
+
+        # Player variables
         self._players = [Player(i) for i in range(1,num_players + 1)]
         self._num_players = num_players
+
+        # Deck variables
         self._deck = Deck(include_joker, num_jokers)
         self._deck.shuffle_deck()
+
+        # Round and turn variables
         self._turn = 1
         self._round = 1
 
@@ -101,6 +109,7 @@ class Game:
         pass
 
     def update_turn(self, skips):
+        # Have a way to update turns even when its roundtable
         pass
 
     def kick_back(self):
