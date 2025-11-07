@@ -16,6 +16,7 @@ while running:
     ###
     ### Game is rendered here
     ###
+    pygame.draw.rect()
 
     pygame.display.flip()
     clock.tick(60)
