@@ -1,4 +1,5 @@
 from collections import deque
+import random
 
 class PokerException(Exception):
     def __init__(self,message, error_code):
@@ -24,7 +25,7 @@ class Player:
             "limits\n Player position limits: {self._positions}", 300)
     
     def __str__(self):
-        return f"Player {self.position}: {self.name}\n"
+        return f"Player: {self._position}\n"
 
 
 class Card:
@@ -40,7 +41,7 @@ class Card:
     
     @suit.setter
     def suit(self, value):
-        if value not in self.suits:
+        if value not in self._suits:
             raise PokerException("Incorrect card suit: {value}\nSuit should be"\
             "one of the following: {self.suits}\n", 100)
         else:
@@ -52,7 +53,7 @@ class Card:
     
     @rank.setter
     def rank(self, value):
-        if value not in self.ranks:
+        if value not in self._ranks:
             raise PokerException("Incorrect card rank: {value}\nRank should be" \
             "one of the following: {self.ranks}\n", 200)
         else:
@@ -71,20 +72,22 @@ class Deck:
         self._ranks = ["King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "Ace"]
 
         # Build the deck
-        self.deck = deque([Card(s, r) for s in self._suits for r in self._ranks])
+        self._deck = deque([Card(s, r) for s in self._suits for r in self._ranks])
 
         # Include joker
         if include_joker:
-            self.deck.extend([Card("Joker", "Joker") for _ in range(num_jokers)])
+            self._deck.extend([Card("Joker", "Joker") for _ in range(num_jokers)])
     
     def __len__(self):
-        return len(self.deck)
+        return len(self._deck)
     
     def __str__(self):
-        return f"Current Deck: {self.deck}\n"
+        return f"Current Deck: {self._deck}\n"
     
     def shuffle_deck(self):
-        pass
+        if len(self._deck) == 0:
+            raise PokerException("Cannot Shuffle an Empty Deck", 400)
+        random.shuffle(self._deck)
 
 
 class Game:
@@ -115,10 +118,16 @@ class Game:
     def kick_back(self):
         pass
 
+    def question(self):
+        pass
+
+    def jump(self):
+        pass
+
     def draw_cards(self, num_draws):
         pass
 
-    def move(self):
+    def play_move(self):
         pass
 
     def is_winner(self):
