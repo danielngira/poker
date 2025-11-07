@@ -1,4 +1,4 @@
-from logic import Player, Game, Card, Deck, PokerException
+from classes import Player, Game, Card, Deck, PokerException
 import pygame
 
 pygame.init()
